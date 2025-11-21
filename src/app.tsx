@@ -138,7 +138,7 @@ export default function Chat() {
   return (
     <div className="h-[100vh] w-full overflow-x-hidden overflow-y-hidden">
       <HasOpenAIKey />
-      <div className="h-full w-full mx-auto max-w-full sm:max-w-3xl lg:max-w-4xl grid grid-rows-[auto_1fr_auto] sm:my-4 sm:h-[calc(100vh-2rem)] overflow-hidden sm:shadow-xl sm:rounded-md sm:border sm:border-neutral-300 dark:sm:border-neutral-800 bg-white dark:bg-neutral-900">
+      <div className="h-full w-full grid grid-rows-[auto_1fr_auto] overflow-hidden bg-white dark:bg-neutral-900">
         <div className="px-4 sm:px-6 py-3 border-b border-neutral-300 dark:border-neutral-800 flex items-center gap-3 z-10">
           <div className="flex items-center justify-center h-8 w-8">
             <svg
