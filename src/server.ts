@@ -30,6 +30,13 @@ const model = openai("gpt-4o-2024-11-20");
  */
 export class Chat extends AIChatAgent<Env> {
   /**
+   * Get the environment bindings (public accessor for protected env property)
+   */
+  getEnv(): Env {
+    return this.env;
+  }
+
+  /**
    * Handles incoming chat messages and manages the response stream
    */
   async onChatMessage(
@@ -61,7 +68,24 @@ export class Chat extends AIChatAgent<Env> {
         });
 
         const result = streamText({
-          system: `You are a helpful assistant that can do various tasks... 
+          system: `You are SB Knowledge Search, an AI assistant with access to SuperBenefit's knowledge base and governance documentation.
+
+**Available Knowledge Sources:**
+
+1. **SuperBenefit Knowledge Base** (searchKnowledge tool)
+   - Use for: General information about SuperBenefit, mission, vision, values, community, operations, programs, and general organizational questions
+   - Examples: "What is SuperBenefit?", "Tell me about the community", "What does SuperBenefit do?"
+
+2. **SuperBenefit Governance** (searchGovernance tool)
+   - Use for: Governance policies, decision-making processes, proposals, voting procedures, organizational structure, and governance-related questions
+   - Examples: "How are decisions made?", "What's the proposal process?", "Who has voting rights?"
+
+**When to use the tools:**
+- If a question is about general SuperBenefit information → use searchKnowledge
+- If a question is about governance, policies, or decision-making → use searchGovernance
+- If a question spans both areas → use both tools
+- Always cite the sources provided by the search results
+- Present information clearly and accurately based on the search results
 
 ${getSchedulePrompt({ date: new Date() })}
 

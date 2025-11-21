@@ -109,6 +109,88 @@ const cancelScheduledTask = tool({
 });
 
 /**
+ * Search SuperBenefit knowledge base for general information
+ * Uses Cloudflare AI Search AutoRAG for retrieval-augmented generation
+ */
+const searchKnowledge = tool({
+  description:
+    "Search the SuperBenefit knowledge base for general information about SuperBenefit, its mission, community, operations, and general questions about the organization",
+  inputSchema: z.object({
+    query: z.string().describe("The search question or topic")
+  }),
+  execute: async ({ query }) => {
+    const { agent } = getCurrentAgent<Chat>();
+    const env = agent!.getEnv();
+
+    console.log(`Searching knowledge base for: ${query}`);
+    try {
+      const result = await env.AI.autorag("sbknowledge-test").aiSearch({
+        query,
+        rewrite_query: true, // Optimize query for better retrieval
+        max_num_results: 8, // Balance context vs precision
+        ranking_options: {
+          score_threshold: 0.65 // Filter low-confidence results
+        }
+      });
+
+      // Return structured response with answer and sources
+      const sources =
+        result.data && result.data.length > 0
+          ? result.data
+              .map((d: any) => `- ${d.filename} (score: ${d.score.toFixed(2)})`)
+              .join("\n")
+          : "No sources available";
+
+      return `${result.response}\n\nSources:\n${sources}`;
+    } catch (error) {
+      console.error("Error searching knowledge base:", error);
+      return `I apologize, but I encountered an error searching the knowledge base: ${error instanceof Error ? error.message : String(error)}`;
+    }
+  }
+});
+
+/**
+ * Search SuperBenefit governance documentation
+ * Uses Cloudflare AI Search AutoRAG for governance-specific queries
+ */
+const searchGovernance = tool({
+  description:
+    "Search SuperBenefit governance documentation for information about decision-making processes, policies, proposals, voting, organizational structure, and governance-related questions",
+  inputSchema: z.object({
+    query: z.string().describe("The governance-related question or topic")
+  }),
+  execute: async ({ query }) => {
+    const { agent } = getCurrentAgent<Chat>();
+    const env = agent!.getEnv();
+
+    console.log(`Searching governance docs for: ${query}`);
+    try {
+      const result = await env.AI.autorag("sbgov-test").aiSearch({
+        query,
+        rewrite_query: true, // Optimize query for better retrieval
+        max_num_results: 8, // Balance context vs precision
+        ranking_options: {
+          score_threshold: 0.65 // Filter low-confidence results
+        }
+      });
+
+      // Return structured response with answer and sources
+      const sources =
+        result.data && result.data.length > 0
+          ? result.data
+              .map((d: any) => `- ${d.filename} (score: ${d.score.toFixed(2)})`)
+              .join("\n")
+          : "No sources available";
+
+      return `${result.response}\n\nSources:\n${sources}`;
+    } catch (error) {
+      console.error("Error searching governance docs:", error);
+      return `I apologize, but I encountered an error searching the governance documentation: ${error instanceof Error ? error.message : String(error)}`;
+    }
+  }
+});
+
+/**
  * Export all available tools
  * These will be provided to the AI model to describe available capabilities
  */
@@ -117,7 +199,9 @@ export const tools = {
   getLocalTime,
   scheduleTask,
   getScheduledTasks,
-  cancelScheduledTask
+  cancelScheduledTask,
+  searchKnowledge,
+  searchGovernance
 } satisfies ToolSet;
 
 /**
