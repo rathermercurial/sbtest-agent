@@ -1,3 +1,20 @@
-OPENAI_API_KEY=sk-proj-1234567890
-# Optional - Cloudflare AI Gateway https://developers.cloudflare.com/ai-gateway/
-# GATEWAY_BASE_URL=https://gateway.ai.cloudflare.com/v1/..
+# ========================================
+# SB Knowledge Search - Local Development Variables
+# ========================================
+#
+# Copy this file to .dev.vars for local development:
+#   cp .dev.vars.example .dev.vars
+#
+# Then fill in your actual API key in .dev.vars
+# DO NOT commit .dev.vars with actual secrets!
+# ========================================
+
+# REQUIRED: OpenAI API Key
+# Get from: https://platform.openai.com/api-keys
+# Format: sk-proj-... or sk-...
+OPENAI_API_KEY=sk-proj-your-openai-api-key-here
+
+# OPTIONAL: Cloudflare AI Gateway
+# Uncomment and configure if using AI Gateway for caching/logging
+# Get from: https://developers.cloudflare.com/ai-gateway/
+# GATEWAY_BASE_URL=https://gateway.ai.cloudflare.com/v1/your-account-id/your-gateway-name/openai
