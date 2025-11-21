@@ -136,10 +136,10 @@ export default function Chat() {
   };
 
   return (
-    <div className="h-[100vh] w-full overflow-hidden">
+    <div className="h-[100vh] w-full overflow-x-hidden overflow-y-hidden">
       <HasOpenAIKey />
-      <div className="h-full w-full mx-auto max-w-full sm:max-w-3xl lg:max-w-4xl sm:px-4 md:px-6 grid grid-rows-[auto_1fr_auto] sm:shadow-xl sm:rounded-md sm:my-4 sm:h-[calc(100vh-2rem)] overflow-hidden sm:border border-neutral-300 dark:border-neutral-800">
-        <div className="px-3 sm:px-4 py-3 border-b border-neutral-300 dark:border-neutral-800 flex items-center gap-3 bg-white dark:bg-neutral-900 z-10">
+      <div className="h-full w-full mx-auto max-w-full sm:max-w-3xl lg:max-w-4xl grid grid-rows-[auto_1fr_auto] sm:my-4 sm:h-[calc(100vh-2rem)] overflow-hidden sm:shadow-xl sm:rounded-md sm:border sm:border-neutral-300 dark:sm:border-neutral-800 bg-white dark:bg-neutral-900">
+        <div className="px-4 sm:px-6 py-3 border-b border-neutral-300 dark:border-neutral-800 flex items-center gap-3 z-10">
           <div className="flex items-center justify-center h-8 w-8">
             <svg
               width="28px"
@@ -159,7 +159,7 @@ export default function Chat() {
           </div>
 
           <div className="flex-1">
-            <h2 className="font-semibold text-base">AI Chat Agent</h2>
+            <h2 className="font-semibold text-base">SB Knowledge Search</h2>
           </div>
 
           <div className="flex items-center gap-2 mr-2">
@@ -193,7 +193,7 @@ export default function Chat() {
         </div>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto px-3 sm:px-4 py-4 sm:py-6 space-y-4 sm:space-y-6">
+        <div className="flex-1 overflow-y-auto overflow-x-hidden px-4 sm:px-6 py-4 sm:py-6 space-y-4 sm:space-y-6">
           {agentMessages.length === 0 && (
             <div className="h-full flex items-center justify-center">
               <Card className="p-6 sm:p-8 max-w-md mx-auto bg-neutral-100 dark:bg-neutral-900">
@@ -350,7 +350,7 @@ export default function Chat() {
             });
             setTextareaHeight("auto"); // Reset height after submission
           }}
-          className="px-3 sm:px-4 py-3 bg-neutral-50 border-t border-neutral-300 dark:border-neutral-800 dark:bg-neutral-900"
+          className="px-4 sm:px-6 py-3 bg-neutral-50 border-t border-neutral-300 dark:border-neutral-800 dark:bg-neutral-900"
         >
           <div className="flex items-center gap-2">
             <div className="flex-1 relative">
